@@ -1,9 +1,9 @@
-name: Check Security Elixir Code
+name: Dialyzer
 
 on: pull_request
 
 jobs:
-  check_security:
+  check_dialyzer:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -20,7 +20,7 @@ jobs:
           otp-version: ${{ matrix.otp }}
 
       - uses: actions/cache@v3
-        id: mix-security-cache
+        id: mix-dialyzer-cache
         with:
           path: deps
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}, {1}', github.workspace, '/mix.lock'))}}
@@ -28,5 +28,5 @@ jobs:
       - name: Install Mix Dependencies
         run: mix deps.get
 
-      - name: Check Security
-        run: mix sobelow --config
+      - name: Dialyzer
+        run: mix dialyzer
