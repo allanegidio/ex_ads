@@ -2,47 +2,33 @@ name: Tests
 
 on: pull_request
 
+env:
+  MIX_ENV: test
+
 jobs:
-  check_dialyzer:
+  check_tests:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        elixir: ['1.14.4']
-        otp: ['25']
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          elixir-version: ${{ matrix.elixir }}
-          otp-version: ${{ matrix.otp }}
-
-      - uses: actions/cache@v3
-        id: mix-dialyzer-cache
-        with:
-          path: deps
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}, {1}', github.workspace, '/mix.lock'))}}
-
-      - name: Install Mix Dependencies
-        run: |
-          mix local.rebar --force
-          mix local.hex --force
-          mix deps.get
-          mix ecto.create
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Check coverage and tests
         run: mix coveralls.html
+        env:
+          MIX_ENV: ${{ env.MIX_ENV }}
 
     services:
       postgres:
-        image: postgres:12.2
+        image: postgres:15.2
         ports: ["5432:5432"]
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_DB: ex_ads_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
