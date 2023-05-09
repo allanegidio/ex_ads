@@ -73,3 +73,11 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :git_ops,
+  mix_project: Mix.Project.get!(),
+  changelog_file: "CHANGELOG.md",
+  repository_url: "https://github.com/allanegidio/ex_ads",
+  types: [],
+  manage_mix_version?: true,
+  version_tag_prefix: "v"

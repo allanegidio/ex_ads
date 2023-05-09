@@ -1,10 +1,12 @@
 defmodule ExAds.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [
       app: :ex_ads,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
@@ -60,7 +62,8 @@ defmodule ExAds.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:git_ops, "~> 2.5.6", only: [:dev]}
     ]
   end
 
