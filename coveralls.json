@@ -1,6 +1,7 @@
 {
     "skip_files": [
         "lib/ex_ads/application.ex",
+        "lib/ex_ads/release.ex",
         "lib/ex_ads_web.ex",
         "lib/ex_ads_web/telemetry.ex",
         "lib/ex_ads_web/router.ex",
