@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": ""
+    "test": "",
+    "deploy": "cd .. && mix assets.deploy && rm -f _build/esbuild*"
   },
   "author": "",
   "license": "ISC"
