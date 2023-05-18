@@ -21,9 +21,11 @@ defmodule ExAdsWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ExAdsWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ExAdsWeb.Api, as: :api do
+    pipe_through :api
+
+    get "/announcements", AnnouncementController, :index
+  end
 
   # Enables LiveDashboard only for development
   #

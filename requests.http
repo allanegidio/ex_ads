@@ -1,0 +1,9 @@
+@host = http://localhost:4000/api
+@randomId = {{ $randomInt 1 999999 }}
+
+### ==================================================================================================================
+### Crate a announcement
+
+### Get All announcements
+# @name getAllAnnouncements
+GET {{host}}/announcements
