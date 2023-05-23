@@ -6,8 +6,6 @@ defmodule ExAdsWeb.Api.AnnouncementControllerTest do
 
     response = json_response(conn, 200)
 
-    assert response == %{
-             "data" => []
-           }
+    assert response == %{"data" => []}
   end
 end

@@ -10,6 +10,6 @@ defmodule ExAds.Repo.Migrations.CreateAnnouncements do
       timestamps()
     end
 
-    create unique_index(:announcements, [:title])
+    # create unique_index(:announcements, [:title])
   end
 end

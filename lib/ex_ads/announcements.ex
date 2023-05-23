@@ -5,4 +5,10 @@ defmodule ExAds.Announcements do
   def list_announcements() do
     Repo.all(Announcement)
   end
+
+  def create_announcement(attrs \\ %{}) do
+    %Announcement{}
+    |> Announcement.changeset(attrs)
+    |> Repo.insert()
+  end
 end
