@@ -21,4 +21,30 @@ defmodule ExAds.AnnouncementsTest do
     assert {:error, changeset} = Announcements.create_announcement(attrs)
     assert %{content: ["can't be blank"]} == errors_on(changeset)
   end
+
+  test "get_announcement!/1" do
+    attrs = %{title: "Title test", content: "Content test"}
+    {:ok, announcement} = Announcements.create_announcement(attrs)
+
+    assert announcement == Announcements.get_announcement!(announcement.id)
+  end
+
+  test "update_announcement/2" do
+    attrs = %{title: "Title test", content: "Content test"}
+    {:ok, announcement} = Announcements.create_announcement(attrs)
+
+    {:ok, announcement_updated} =
+      Announcements.update_announcement(announcement, %{content: "Content Updated test"})
+
+    assert announcement_updated.content == "Content Updated test"
+  end
+
+  test "delete_announcement/1" do
+    attrs = %{title: "Title test", content: "Content test"}
+    {:ok, announcement} = Announcements.create_announcement(attrs)
+
+    {:ok, _announcement_deleted} = Announcements.delete_announcement(announcement)
+
+    assert_raise Ecto.NoResultsError, fn -> Announcements.get_announcement!(announcement.id) end
+  end
 end
