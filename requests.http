@@ -1,0 +1,49 @@
+@host = http://localhost:4000/api
+@randomId = {{ $randomInt 1 999999 }}
+
+### ==================================================================================================================
+
+### Get All announcements
+# @name getAllAnnouncements
+GET {{host}}/announcements
+
+### ==================================================================================================================
+
+### Create announcements
+# @name createAnnouncements
+@announcementId = {{ createAnnouncements.response.body.data.id }}
+POST {{host}}/announcements
+content-type: application/json
+
+{
+    "announcement": {
+        "title": "Title sample {{randomId}}",
+        "content": "Sample"
+    }
+}
+
+### ==================================================================================================================
+
+### Show announcement
+# @name showAnnouncement
+GET {{host}}/announcements/{{announcementId}}
+
+### ==================================================================================================================
+
+### Update announcements
+# @name updateAnnouncements
+@announcementId = {{ createAnnouncements.response.body.data.id }}
+PATCH {{host}}/announcements/{{announcementId}}
+content-type: application/json
+
+{
+    "announcement": {
+        "content": "Content updated"
+    }
+}
+
+### ==================================================================================================================
+
+### Delete announcement
+# @name deleteAnnouncement
+DELETE {{host}}/announcements/{{announcementId}}
