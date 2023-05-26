@@ -2,9 +2,12 @@ defmodule ExAds.Categories.Category do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
+
   schema "categories" do
-    field :description, :string
-    field :name, :string
+    field(:description, :string)
+    field(:name, :string)
 
     timestamps()
   end
