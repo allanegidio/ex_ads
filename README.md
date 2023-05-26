@@ -1,5 +1,7 @@
 # ExAds
 
+## This is an API playground where I'm testing some features.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`

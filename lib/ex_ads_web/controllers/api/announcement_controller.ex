@@ -3,7 +3,7 @@ defmodule ExAdsWeb.Api.AnnouncementController do
 
   alias ExAds.Announcements
 
-  action_fallback(ExAdsWeb.Api.FallbackController)
+  action_fallback ExAdsWeb.FallbackController
 
   def index(conn, _params) do
     announcements = Announcements.list_announcements()

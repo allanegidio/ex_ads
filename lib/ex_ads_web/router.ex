@@ -24,11 +24,8 @@ defmodule ExAdsWeb.Router do
   scope "/api", ExAdsWeb.Api, as: :api do
     pipe_through :api
 
-    get "/announcements", AnnouncementController, :index
-    post "/announcements", AnnouncementController, :create
-    get "/announcements/:id", AnnouncementController, :show
-    patch "/announcements/:id", AnnouncementController, :update
-    delete "/announcements/:id", AnnouncementController, :delete
+    resources "/announcements", AnnouncementController
+    resources "/categories", CategoryController
   end
 
   # Enables LiveDashboard only for development
