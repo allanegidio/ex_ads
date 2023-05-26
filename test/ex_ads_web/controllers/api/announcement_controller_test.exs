@@ -1,7 +1,7 @@
 defmodule ExAdsWeb.Api.AnnouncementControllerTest do
   use ExAdsWeb.ConnCase
 
-  alias ExAdsWeb.AnnouncementFactory
+  alias ExAdsWeb.AnnouncementFixtures
 
   test "list all announcements", %{conn: conn} do
     conn = get(conn, Routes.api_announcement_path(conn, :index))
@@ -67,7 +67,7 @@ defmodule ExAdsWeb.Api.AnnouncementControllerTest do
   end
 
   defp create_announcement(_) do
-    announcement = AnnouncementFactory.build(%{title: "Test title", content: "Content test"})
+    announcement = AnnouncementFixtures.announcement_fixture()
 
     %{announcement: announcement}
   end
