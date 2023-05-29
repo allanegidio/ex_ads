@@ -26,6 +26,7 @@ defmodule ExAdsWeb.Router do
 
     resources "/announcements", AnnouncementController
     resources "/categories", CategoryController
+    resources "/accounts", UserController
   end
 
   # Enables LiveDashboard only for development

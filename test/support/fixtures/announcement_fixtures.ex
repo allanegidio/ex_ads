@@ -1,4 +1,4 @@
-defmodule ExAdsWeb.AnnouncementFixtures do
+defmodule ExAds.AnnouncementFixtures do
   alias ExAds.Announcements
 
   @moduledoc """
