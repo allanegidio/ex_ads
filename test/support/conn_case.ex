@@ -17,6 +17,9 @@ defmodule ExAdsWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias ExAds.AccountsFixtures
+  alias ExAds.Sessions
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -43,4 +46,14 @@ defmodule ExAdsWeb.ConnCase do
 
   #   {:ok, conn: conn, user: user, token: token}
   # end
+
+  def include_admin_token(%{conn: conn}) do
+    user = AccountsFixtures.admin_user_fixture()
+
+    {:ok, _user_from_token, token} = Sessions.create(user.email, user.password)
+
+    conn = Plug.Conn.put_req_header(conn, "authorization", "Bearer" <> token)
+
+    {:ok, conn: conn, user: user, token: token}
+  end
 end

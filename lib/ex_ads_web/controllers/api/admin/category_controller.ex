@@ -1,4 +1,4 @@
-defmodule ExAdsWeb.Api.CategoryController do
+defmodule ExAdsWeb.Api.Admin.CategoryController do
   use ExAdsWeb, :controller
 
   alias ExAds.Categories
@@ -15,7 +15,7 @@ defmodule ExAdsWeb.Api.CategoryController do
     with {:ok, %Category{} = category} <- Categories.create_category(category_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_category_path(conn, :show, category))
+      |> put_resp_header("location", Routes.api_admin_category_path(conn, :show, category))
       |> render("show.json", category: category)
     end
   end

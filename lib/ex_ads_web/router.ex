@@ -1,6 +1,12 @@
 defmodule ExAdsWeb.Router do
   use ExAdsWeb, :router
 
+  alias ExAdsWeb.Plugs
+
+  pipeline :is_admin do
+    plug Plugs.IsAdmin
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -24,9 +30,6 @@ defmodule ExAdsWeb.Router do
   scope "/api", ExAdsWeb.Api, as: :api do
     pipe_through :api
 
-    resources "/announcements", AnnouncementController
-    resources "/categories", CategoryController
-
     post "/users", UserController, :create
     get "/users/:id", UserController, :show
     post "/users/forgot-password", UserController, :forgot_password
@@ -34,6 +37,13 @@ defmodule ExAdsWeb.Router do
 
     post "/sessions", SessionController, :create
     post "/sessions/signin", SessionController, :sign_in
+
+    scope "/admin", Admin, as: :admin do
+      pipe_through :is_admin
+
+      resources "/announcements", AnnouncementController
+      resources "/categories", CategoryController
+    end
   end
 
   # Enables LiveDashboard only for development

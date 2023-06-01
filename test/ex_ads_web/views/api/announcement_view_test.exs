@@ -2,7 +2,7 @@ defmodule ExAdsWeb.Api.AnnouncementViewTest do
   use ExAdsWeb.ConnCase
 
   alias ExAds.Announcements.Announcement
-  alias ExAdsWeb.Api.AnnouncementView
+  alias ExAdsWeb.Api.Admin.AnnouncementView
 
   test "render/2 should render many json" do
     announcements = [

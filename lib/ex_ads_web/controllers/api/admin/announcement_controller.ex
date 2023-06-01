@@ -1,4 +1,4 @@
-defmodule ExAdsWeb.Api.AnnouncementController do
+defmodule ExAdsWeb.Api.Admin.AnnouncementController do
   use ExAdsWeb, :controller
 
   alias ExAds.Announcements
@@ -15,7 +15,10 @@ defmodule ExAdsWeb.Api.AnnouncementController do
     with {:ok, announcement} <- Announcements.create_announcement(announcement) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.api_announcement_path(conn, :show, announcement))
+      |> put_resp_header(
+        "location",
+        Routes.api_admin_announcement_path(conn, :show, announcement)
+      )
       |> render("show.json", announcement: announcement)
     end
   end

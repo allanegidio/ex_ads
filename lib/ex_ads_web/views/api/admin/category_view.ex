@@ -1,7 +1,7 @@
-defmodule ExAdsWeb.Api.CategoryView do
+defmodule ExAdsWeb.Api.Admin.CategoryView do
   use ExAdsWeb, :view
 
-  alias ExAdsWeb.Api.CategoryView
+  alias ExAdsWeb.Api.Admin.CategoryView
 
   def render("index.json", %{categories: categories}) do
     %{data: render_many(categories, CategoryView, "category.json")}
