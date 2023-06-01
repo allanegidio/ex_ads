@@ -1,4 +1,4 @@
-defmodule ExAdsWeb.Api.CategoryControllerTest do
+defmodule ExAdsWeb.Api.Admin.CategoryControllerTest do
   use ExAdsWeb.ConnCase
 
   import ExAds.CategoriesFixtures
@@ -15,23 +15,25 @@ defmodule ExAdsWeb.Api.CategoryControllerTest do
   }
   @invalid_attrs %{description: nil, name: nil}
 
+  setup :include_admin_token
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
   describe "index" do
     test "lists all categories", %{conn: conn} do
-      conn = get(conn, Routes.api_category_path(conn, :index))
+      conn = get(conn, Routes.api_admin_category_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
 
   describe "create category" do
     test "renders category when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.api_category_path(conn, :create), category: @create_attrs)
+      conn = post(conn, Routes.api_admin_category_path(conn, :create), category: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.api_category_path(conn, :show, id))
+      conn = get(conn, Routes.api_admin_category_path(conn, :show, id))
 
       assert %{
                "id" => ^id,
@@ -41,7 +43,7 @@ defmodule ExAdsWeb.Api.CategoryControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.api_category_path(conn, :create), category: @invalid_attrs)
+      conn = post(conn, Routes.api_admin_category_path(conn, :create), category: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -53,10 +55,12 @@ defmodule ExAdsWeb.Api.CategoryControllerTest do
       conn: conn,
       category: %Category{id: id} = category
     } do
-      conn = put(conn, Routes.api_category_path(conn, :update, category), category: @update_attrs)
+      conn =
+        put(conn, Routes.api_admin_category_path(conn, :update, category), category: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.api_category_path(conn, :show, id))
+      conn = get(conn, Routes.api_admin_category_path(conn, :show, id))
 
       assert %{
                "id" => ^id,
@@ -67,7 +71,9 @@ defmodule ExAdsWeb.Api.CategoryControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, category: category} do
       conn =
-        put(conn, Routes.api_category_path(conn, :update, category), category: @invalid_attrs)
+        put(conn, Routes.api_admin_category_path(conn, :update, category),
+          category: @invalid_attrs
+        )
 
       assert json_response(conn, 422)["errors"] != %{}
     end
@@ -77,11 +83,11 @@ defmodule ExAdsWeb.Api.CategoryControllerTest do
     setup [:create_category]
 
     test "deletes chosen category", %{conn: conn, category: category} do
-      conn = delete(conn, Routes.api_category_path(conn, :delete, category))
+      conn = delete(conn, Routes.api_admin_category_path(conn, :delete, category))
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.api_category_path(conn, :show, category))
+        get(conn, Routes.api_admin_category_path(conn, :show, category))
       end
     end
   end

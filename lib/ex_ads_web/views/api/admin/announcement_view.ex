@@ -1,4 +1,4 @@
-defmodule ExAdsWeb.Api.AnnouncementView do
+defmodule ExAdsWeb.Api.Admin.AnnouncementView do
   use ExAdsWeb, :view
 
   def render("index.json", %{announcements: announcements}) do

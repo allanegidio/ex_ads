@@ -1,10 +1,12 @@
-defmodule ExAdsWeb.Api.AnnouncementControllerTest do
+defmodule ExAdsWeb.Api.Admin.AnnouncementControllerTest do
   use ExAdsWeb.ConnCase
 
   alias ExAds.AnnouncementFixtures
 
+  setup :include_admin_token
+
   test "list all announcements", %{conn: conn} do
-    conn = get(conn, Routes.api_announcement_path(conn, :index))
+    conn = get(conn, Routes.api_admin_announcement_path(conn, :index))
 
     response = json_response(conn, 200)
 
@@ -13,10 +15,10 @@ defmodule ExAdsWeb.Api.AnnouncementControllerTest do
 
   test "create announcement when data is valid", %{conn: conn} do
     attrs = %{title: "Test title", content: "Content test"}
-    conn = post(conn, Routes.api_announcement_path(conn, :create, announcement: attrs))
+    conn = post(conn, Routes.api_admin_announcement_path(conn, :create, announcement: attrs))
     assert %{"data" => %{"id" => id}} = json_response(conn, 201)
 
-    conn = get(conn, Routes.api_announcement_path(conn, :show, id))
+    conn = get(conn, Routes.api_admin_announcement_path(conn, :show, id))
 
     assert %{"data" => %{"id" => ^id}} = json_response(conn, 200)
   end
@@ -24,7 +26,7 @@ defmodule ExAdsWeb.Api.AnnouncementControllerTest do
   test "create announcement when data is invalid", %{conn: conn} do
     attrs = %{title: "", content: ""}
 
-    conn = post(conn, Routes.api_announcement_path(conn, :create, announcement: attrs))
+    conn = post(conn, Routes.api_admin_announcement_path(conn, :create, announcement: attrs))
 
     assert %{
              "errors" => %{
@@ -39,13 +41,13 @@ defmodule ExAdsWeb.Api.AnnouncementControllerTest do
 
     test "update announcement with valid data", %{conn: conn, announcement: announcement} do
       conn =
-        patch(conn, Routes.api_announcement_path(conn, :update, announcement),
+        patch(conn, Routes.api_admin_announcement_path(conn, :update, announcement),
           announcement: %{content: "Content updated"}
         )
 
       assert %{"data" => %{"id" => id}} = json_response(conn, 200)
 
-      conn = get(conn, Routes.api_announcement_path(conn, :show, id))
+      conn = get(conn, Routes.api_admin_announcement_path(conn, :show, id))
 
       assert %{"data" => %{"id" => ^id, "content" => "Content updated"}} =
                json_response(conn, 200)
@@ -56,12 +58,12 @@ defmodule ExAdsWeb.Api.AnnouncementControllerTest do
     setup [:create_announcement]
 
     test "delete announcement", %{conn: conn, announcement: announcement} do
-      conn = delete(conn, Routes.api_announcement_path(conn, :update, announcement))
+      conn = delete(conn, Routes.api_admin_announcement_path(conn, :update, announcement))
 
       assert response(conn, 204)
 
       assert_error_sent :not_found, fn ->
-        get(conn, Routes.api_announcement_path(conn, :show, announcement.id))
+        get(conn, Routes.api_admin_announcement_path(conn, :show, announcement.id))
       end
     end
   end
