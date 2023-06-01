@@ -1,5 +1,6 @@
 defmodule ExAdsWeb.Api.CategoryView do
   use ExAdsWeb, :view
+
   alias ExAdsWeb.Api.CategoryView
 
   def render("index.json", %{categories: categories}) do

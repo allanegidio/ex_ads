@@ -26,6 +26,14 @@ defmodule ExAdsWeb.Router do
 
     resources "/announcements", AnnouncementController
     resources "/categories", CategoryController
+
+    post "/users", UserController, :create
+    get "/users/:id", UserController, :show
+    post "/users/forgot-password", UserController, :forgot_password
+    post "/users/reset-password", UserController, :reset_password
+
+    post "/sessions", SessionController, :create
+    post "/sessions/signin", SessionController, :sign_in
   end
 
   # Enables LiveDashboard only for development

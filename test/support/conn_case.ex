@@ -35,4 +35,12 @@ defmodule ExAdsWeb.ConnCase do
     ExAds.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  # def include_normal_user_token(%{conn: conn}) do
+  #   user = AccountsFixtures.user_fixture()
+
+  #   {:ok, _user_from_token, token} = Sessions.create(user.email, user.password)
+
+  #   {:ok, conn: conn, user: user, token: token}
+  # end
 end

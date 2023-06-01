@@ -21,4 +21,11 @@ defmodule ExAdsWeb.FallbackController do
     |> put_view(ExAdsWeb.ErrorView)
     |> render(:"404")
   end
+
+  # This clause is an example of how to handle bad requests.
+  def call(conn, {:error, message}) do
+    conn
+    |> put_status(:bad_request)
+    |> json(%{message: message})
+  end
 end
