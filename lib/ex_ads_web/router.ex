@@ -3,10 +3,6 @@ defmodule ExAdsWeb.Router do
 
   alias ExAdsWeb.Plugs
 
-  pipeline :is_admin do
-    plug Plugs.IsAdmin
-  end
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -20,6 +16,14 @@ defmodule ExAdsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :is_admin do
+    plug Plugs.IsAdmin
+  end
+
+  pipeline :authenticated do
+    plug Plugs.IsAuthenticated
+  end
+
   scope "/", ExAdsWeb do
     pipe_through :browser
 
@@ -31,12 +35,17 @@ defmodule ExAdsWeb.Router do
     pipe_through :api
 
     post "/users", UserController, :create
-    get "/users/:id", UserController, :show
     post "/users/forgot-password", UserController, :forgot_password
     post "/users/reset-password", UserController, :reset_password
 
     post "/sessions", SessionController, :create
-    post "/sessions/signin", SessionController, :sign_in
+
+    scope "/" do
+      pipe_through :authenticated
+
+      get "/users/:id", UserController, :show
+      post "/sessions/signin", SessionController, :sign_in
+    end
 
     scope "/admin", Admin, as: :admin do
       pipe_through :is_admin

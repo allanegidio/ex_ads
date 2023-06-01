@@ -5,7 +5,7 @@ defmodule ExAdsWeb.Api.SessionControllerTest do
   alias ExAds.Sessions
 
   describe "Sessions Controller Tests" do
-    setup [:create_user]
+    setup [:include_admin_token]
 
     test "renders user when data is valid", %{conn: conn, user: user} do
       conn =

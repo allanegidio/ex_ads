@@ -14,7 +14,7 @@ defmodule ExAdsWeb.Api.UserControllerTest do
   }
 
   describe "get user" do
-    setup [:create_user]
+    setup :include_admin_token
 
     test "render user when id is valid", %{conn: conn, user: user} do
       %{id: id, email: email, username: username} = user
@@ -30,6 +30,8 @@ defmodule ExAdsWeb.Api.UserControllerTest do
   end
 
   describe "create user" do
+    setup :include_admin_token
+
     test "renders user when data is valid", %{conn: conn} do
       conn = post(conn, Routes.api_user_path(conn, :create), user: @valid_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
