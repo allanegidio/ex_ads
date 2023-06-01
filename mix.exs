@@ -53,6 +53,7 @@ defmodule ExAds.MixProject do
       {:phoenix_live_dashboard, "~> 0.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
+      {:phoenix_swoosh, "~> 1.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
@@ -64,7 +65,8 @@ defmodule ExAds.MixProject do
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:git_ops, "~> 2.5.6", only: [:dev]},
-      {:argon2_elixir, "~> 3.0"}
+      {:argon2_elixir, "~> 3.0"},
+      {:finch, "~> 0.16"}
     ]
   end
 

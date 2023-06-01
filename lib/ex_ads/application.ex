@@ -15,9 +15,10 @@ defmodule ExAds.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ExAds.PubSub},
       # Start the Endpoint (http/https)
-      ExAdsWeb.Endpoint
+      ExAdsWeb.Endpoint,
       # Start a worker by calling: ExAds.Worker.start_link(arg)
       # {ExAds.Worker, arg}
+      {Finch, name: Swoosh.Finch}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -1,8 +1,8 @@
 defmodule ExAdsWeb.Api.SessionControllerTest do
   use ExAdsWeb.ConnCase
 
-  alias ExAds.Sessions
   alias ExAds.AccountsFixtures
+  alias ExAds.Sessions
 
   describe "Sessions Controller Tests" do
     setup [:create_user]

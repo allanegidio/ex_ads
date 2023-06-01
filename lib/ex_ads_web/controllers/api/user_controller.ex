@@ -19,4 +19,18 @@ defmodule ExAdsWeb.Api.UserController do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
   end
+
+  def forgot_password(conn, %{"email" => email}) do
+    with {:ok, _user, _token} <- Accounts.deliver_user_reset_password_instructions(email) do
+      conn
+      |> put_resp_content_type("application/json")
+      |> json(%{message: "Your password reset instruction was sent to your email"})
+    end
+  end
+
+  def reset_password(conn, %{"token" => token, "user" => user_new_password}) do
+    with {:ok, user} <- Accounts.reset_password(token, user_new_password) do
+      render(conn, "show.json", user: user)
+    end
+  end
 end

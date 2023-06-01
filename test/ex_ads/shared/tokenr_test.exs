@@ -13,6 +13,13 @@ defmodule ExAds.Shared.TokenrTest do
       assert {:ok, user_from_token} = Tokenr.verify_auth_token(token)
       assert user_from_token == user
     end
+
+    test "generate_forgot_email_token/1 should create forgot email token", %{user: user} do
+      token = Tokenr.generate_forgot_email_token(user)
+
+      assert {:ok, user_from_token} = Tokenr.verify_forgot_email_token(token)
+      assert user_from_token == user
+    end
   end
 
   defp create_user(_) do
