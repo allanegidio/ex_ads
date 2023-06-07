@@ -3,6 +3,8 @@ defmodule ExAdsWeb.Api.SessionController do
 
   alias ExAds.Sessions
 
+  action_fallback ExAdsWeb.FallbackController
+
   def create(conn, %{"email" => email, "password" => password}) do
     with {:ok, user, token} <- Sessions.create(email, password) do
       session = %{user: user, token: token}
