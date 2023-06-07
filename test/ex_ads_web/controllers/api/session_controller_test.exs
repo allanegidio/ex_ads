@@ -1,9 +1,6 @@
 defmodule ExAdsWeb.Api.SessionControllerTest do
   use ExAdsWeb.ConnCase
 
-  alias ExAds.AccountsFixtures
-  alias ExAds.Sessions
-
   describe "Sessions Controller Tests" do
     setup [:include_admin_token]
 
@@ -17,18 +14,16 @@ defmodule ExAdsWeb.Api.SessionControllerTest do
       assert user.email == json_response(conn, 201)["data"]["user"]["data"]["email"]
     end
 
+    test "throw an error when user is not authenticated", %{conn: conn} do
+      conn = post(conn, Routes.api_session_path(conn, :sign_in, token: "token_invalido"))
+
+      assert %{"message" => "invalid"} = json_response(conn, 400)
+    end
+
     test "get session", %{conn: conn, user: user, token: token} do
       conn = post(conn, Routes.api_session_path(conn, :sign_in, token: token))
 
       assert user.email == json_response(conn, 200)["data"]["user"]["data"]["email"]
     end
-  end
-
-  defp create_user(_) do
-    user = AccountsFixtures.user_fixture()
-
-    {:ok, _user, token} = Sessions.create(user.email, user.password)
-
-    %{user: user, token: token}
   end
 end
